@@ -157,6 +157,25 @@ def limpiarEntry():
     entrada5.delete(0, tk.END)
     entrada6.delete(0, tk.END)
     entrada7.delete(0, tk.END)
+    
+    
+################################################################################ 
+##FUNCION PARA VALORIZAR EL TOTAL DEL STOCK#####################################
+def valorizarStock():
+    mi_conexion= sqlite3.connect("basededatosPrueba.db")  
+    cursor=mi_conexion.cursor() 
+    instruccion= f"SELECT * FROM stockFerreteria"
+    cursor.execute(instruccion)
+    datos=cursor.fetchall()
+    mi_conexion.commit()
+    mi_conexion.close()
+    sumaStock=0
+    for valor in datos:
+        (codigo, categoria ,descripcion, cantidad, preciounit, precioVPublico)=valor
+        producto=cantidad*preciounit
+        sumaStock=producto+sumaStock
+        #print(producto)
+    print(f"El valor acumulado de todo su Stock es de: ${sumaStock:.2f} ")
 
 ##################################################################################################   
 #INICIALIZACION DE VARIABLES######################################################################
